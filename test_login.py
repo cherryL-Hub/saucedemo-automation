@@ -14,22 +14,22 @@ class Testlogin:
     def test_login1(self,drivertest,username,password):
         login_page=Login(drivertest)
         login_page.goto()
-        login_page.input_username()
-        login_page.input_password()
+        login_page.input_username(username)
+        login_page.input_password(password)
         shop_page=login_page.input_loginbutton()
 
 
         if username == "locked_out_user":
             with pytest.raises(TimeoutException):
-                shop_page.wait_shop()
+                shop_page.shop_wait()
 
             error_text=login_page.error_get()
             assert "locked out" in error_text
             print("失败用例测试成功")
             return
 
-        shop_page.wait_shop()
-        assert "Products" in drivertest.page_source
+        shop_page.shop_wait()
+        assert "products" in drivertest.page_source
         print("成功用例测试成功")
 
 
